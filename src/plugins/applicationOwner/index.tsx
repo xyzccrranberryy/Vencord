@@ -115,13 +115,18 @@ const userContextPatch: NavContextMenuPatchCallback = (children, { user }: { use
 export default definePlugin({
     name: "ApplicationOwner",
     description: "Adds a 'View Owner' option to bot/app context menus to see who owns them.",
-    authors: [{ name: "YourName", id: 123456789012345678n }], // Update this with your actual name/ID if desired
+    authors: [{ name: "YourName", id: 123456789012345678n }],
 
     start() {
+        // Triggers when right-clicking the bot in chat or the member list
         addContextMenuPatch("user-context", userContextPatch);
+        
+        // Triggers when clicking the three dots in the user profile popout
+        addContextMenuPatch("user-profile-actions", userContextPatch);
     },
 
     stop() {
         removeContextMenuPatch("user-context", userContextPatch);
+        removeContextMenuPatch("user-profile-actions", userContextPatch);
     },
 });
