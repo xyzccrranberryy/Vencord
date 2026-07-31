@@ -36,6 +36,7 @@ async function showOwner(botId: string, botName: string) {
         const res = await RestAPI.get({ url: `/applications/${botId}/rpc` });
         app = res.body;
     } catch (e) {
+        console.error("[ApplicationOwner]", e);
         Alerts.show({
             title: "Application Owner",
             body: `Couldn't fetch owner info for ${botName}. Discord may be hiding this, or it isn't a public application.`
@@ -50,13 +51,7 @@ async function showOwner(botId: string, botName: string) {
             title: "Application Owner",
             body: (
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <img
-                        src={getAvatarURL(id, avatar)}
-                        alt=""
-                        width={64}
-                        height={64}
-                        style={{ borderRadius: "50%" }}
-                    />
+                    <img src={getAvatarURL(id, avatar)} alt="" width={64} height={64} style={{ borderRadius: "50%" }} />
                     <div>
                         <div style={{ fontWeight: "bold", fontSize: "16px" }}>{tag}</div>
                         <div style={{ opacity: 0.7, fontSize: "12px" }}>ID: {id}</div>
@@ -73,15 +68,7 @@ async function showOwner(botId: string, botName: string) {
             title: "Application Owner",
             body: (
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    {iconUrl && (
-                        <img
-                            src={iconUrl}
-                            alt=""
-                            width={64}
-                            height={64}
-                            style={{ borderRadius: "50%" }}
-                        />
-                    )}
+                    {iconUrl && <img src={iconUrl} alt="" width={64} height={64} style={{ borderRadius: "50%" }} />}
                     <div>
                         <div style={{ fontWeight: "bold", fontSize: "16px" }}>{app.team.name}</div>
                         <div style={{ opacity: 0.7, fontSize: "12px" }}>Owned by a team</div>
@@ -102,13 +89,11 @@ const userContextPatch: NavContextMenuPatchCallback = (children, { user }: { use
     if (!user?.bot) return;
 
     children.push(
-        <Menu.MenuGroup>
-            <Menu.MenuItem
-                id="view-application-owner"
-                label="View Owner"
-                action={() => showOwner(user.id, user.username ?? "This application")}
-            />
-        </Menu.MenuGroup>
+        <Menu.MenuItem
+            id="view-application-owner"
+            label="View Owner"
+            action={() => showOwner(user.id, user.username ?? "This application")}
+        />
     );
 };
 
@@ -118,15 +103,10 @@ export default definePlugin({
     authors: [{ name: "YourName", id: 123456789012345678n }],
 
     start() {
-        // Triggers when right-clicking the bot in chat or the member list
         addContextMenuPatch("user-context", userContextPatch);
-        
-        // Triggers when clicking the three dots in the user profile popout
-        addContextMenuPatch("user-profile-actions", userContextPatch);
     },
 
     stop() {
         removeContextMenuPatch("user-context", userContextPatch);
-        removeContextMenuPatch("user-profile-actions", userContextPatch);
     },
 });
