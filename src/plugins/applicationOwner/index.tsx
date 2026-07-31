@@ -102,18 +102,20 @@ const userContextPatch: NavContextMenuPatchCallback = (children, { user }: { use
     if (!user?.bot) return;
 
     children.push(
-        <Menu.MenuItem
-            id="view-application-owner"
-            label="View Owner"
-            action={() => showOwner(user.id, user.username ?? "This application")}
-        />
+        <Menu.MenuGroup>
+            <Menu.MenuItem
+                id="view-application-owner"
+                label="View Owner"
+                action={() => showOwner(user.id, user.username ?? "This application")}
+            />
+        </Menu.MenuGroup>
     );
 };
 
 export default definePlugin({
     name: "ApplicationOwner",
     description: "Adds a 'View Owner' option to bot/app context menus to see who owns them.",
-    authors: [{ name: "YourName", id: 123456789012345678n }],
+    authors: [{ name: "YourName", id: 123456789012345678n }], // Update this with your actual name/ID if desired
 
     start() {
         addContextMenuPatch("user-context", userContextPatch);
