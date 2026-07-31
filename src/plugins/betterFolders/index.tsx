@@ -127,6 +127,28 @@ export const settings = definePluginSettings({
             { label: "When more than one folder is expanded", value: FolderIconDisplay.MoreThanOneFolderExpanded }
         ],
         restartNeeded: true
+    },
+    customImage: {
+        type: OptionType.STRING,
+        description: "Custom background image URL for the folder sidebar (leave empty to disable)",
+        default: ""
+    },
+    customImageOpacity: {
+        type: OptionType.SLIDER,
+        description: "Custom image opacity",
+        markers: [0, 0.25, 0.5, 0.75, 1],
+        default: 1,
+        stickToMarkers: false
+    },
+    customImageFit: {
+        type: OptionType.SELECT,
+        description: "How the custom image should fit the sidebar",
+        options: [
+            { label: "Cover", value: "cover", default: true },
+            { label: "Contain", value: "contain" },
+            { label: "Stretch", value: "fill" },
+            { label: "Tile", value: "repeat" }
+        ]
     }
 });
 

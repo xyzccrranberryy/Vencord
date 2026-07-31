@@ -1,5 +1,19 @@
 .vc-betterFolders-sidebar {
+    position: relative;
     grid-area: betterFoldersSidebar
+}
+
+.vc-betterFolders-sidebar-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.vc-betterFolders-sidebar-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
 }
 
 /* These area names need to be hardcoded. Only betterFoldersSidebar is added by the plugin. */
